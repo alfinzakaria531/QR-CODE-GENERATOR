@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator — Instan & Gratis</title>
+    <!-- Tailwind CSS untuk Styling Modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Pustaka QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* Animasi halus untuk kontainer QR */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        /* Memastikan canvas/img di dalam #qrcode berada di tengah */
+        #qrcode img, #qrcode canvas {
+            margin: 0 auto;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between font-sans selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header -->
+    <header class="py-6 border-b border-slate-800">
+        <div class="max-w-3xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">
+                    QR
+                </div>
+                <h1 class="text-xl font-bold tracking-tight">Quick<span class="text-indigo-400">QR</span></h1>
+            </div>
+            <a href="https://github.com" target="_blank" class="text-sm text-slate-400 hover:text-white transition">
+                GitHub Repo &rarr;
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl w-full mx-auto px-4 py-10 flex-grow flex items-center justify-center">
+        <div class="bg-slate-800/70 backdrop-blur-md border border-slate-700 rounded-2xl p-6 md:p-8 w-full shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            
+            <!-- Kolom Kiri: Form Input & Kustomisasi -->
+            <div class="space-y-5">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-1">Buat QR Code</h2>
+                    <p class="text-sm text-slate-400">Masukkan tautan (URL) atau teks apa saja di bawah ini.</p>
+                </div>
+
+                <!-- Input Teks / Link -->
+                <div>
+                    <label for="qr-text" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                        Teks atau URL
+                    </label>
+                    <input 
+                        type="text" 
+                        id="qr-text" 
+                        placeholder="https://contoh.com atau teks bebas..." 
+                        class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- Pengaturan Warna & Ukuran -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="qr-size" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                            Ukuran (px)
+                        </label>
+                        <select id="qr-size" class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="200">200 x 200</option>
+                            <option value="256" selected>256 x 256</option>
+                            <option value="320">320 x 320</option>
+                            <option value="512">512 x 512 (HD)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="qr-color" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                            Warna QR
+                        </label>
+                        <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5">
+                            <input type="color" id="qr-color" value="#0f172a" class="w-7 h-7 rounded cursor-pointer bg-transparent border-0">
+                            <span id="color-hex" class="text-xs font-mono text-slate-300">#0F172A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Generate -->
+                <button 
+                    id="generate-btn" 
+                    class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition transform active:scale-[0.99] cursor-pointer">
+                    Generate QR Code
+                </button>
+            </div>
+
+            <!-- Kolom Kanan: Preview & Download -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/80 border border-slate-700/80 rounded-xl p-6 min-h-[300px]">
+                
+                <!-- Placeholder sebelum QR dibuat -->
+                <div id="placeholder" class="text-center text-slate-500 space-y-2">
+                    <svg class="w-12 h-12 mx-auto opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                    </svg>
+                    <p class="text-sm">QR Code Anda akan muncul di sini</p>
+                </div>
+
+                <!-- Kontainer Output QR Code -->
+                <div id="qr-wrapper" class="hidden flex-col items-center space-y-5 w-full animate-fade-in">
+                    <div class="bg-white p-4 rounded-xl shadow-md">
+                        <div id="qrcode"></div>
+                    </div>
+                    
+                    <button 
+                        id="download-btn" 
+                        class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2 cursor-pointer">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Unduh PNG
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-800/60">
+        Dibuat dengan HTML, Tailwind CSS & QRCode.js • Siap untuk GitHub Pages
+    </footer>
+
+    <!-- Logika JavaScript -->
+    <script>
+        const qrText = document.getElementById('qr-text');
+        const qrSize = document.getElementById('qr-size');
+        const qrColor = document.getElementById('qr-color');
+        const colorHex = document.getElementById('color-hex');
+        const generateBtn = document.getElementById('generate-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const qrcodeContainer = document.getElementById('qrcode');
+        const qrWrapper = document.getElementById('qr-wrapper');
+        const placeholder = document.getElementById('placeholder');
+
+        // Update teks kode warna Hex saat color picker berubah
+        qrColor.addEventListener('input', (e) => {
+            colorHex.textContent = e.target.value.toUpperCase();
+        });
+
+        // Fungsi utama generate QR
+        function generateQRCode() {
+            const text = qrText.value.trim();
+            
+            if (!text) {
+                qrText.focus();
+                qrText.classList.add('ring-2', 'ring-rose-500');
+                setTimeout(() => qrText.classList.remove('ring-2', 'ring-rose-500'), 1500);
+                return;
+            }
+
+            // Bersihkan QR sebelumnya
+            qrcodeContainer.innerHTML = '';
+
+            const size = parseInt(qrSize.value);
+            const colorDark = qrColor.value;
+
+            // Buat QR Code baru
+            new QRCode(qrcodeContainer, {
+                text: text,
+                width: size,
+                height: size,
+                colorDark: colorDark,
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H // Tingkat koreksi error tinggi (30%)
+            });
+
+            // Tampilkan hasil dan sembunyikan placeholder
+            placeholder.classList.add('hidden');
+            qrWrapper.classList.remove('hidden');
+            qrWrapper.classList.add('flex');
+        }
+
+        // Event klik tombol Generate
+        generateBtn.addEventListener('click', generateQRCode);
+
+        // Tekan Enter di input teks untuk generate
+        qrText.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                generateQRCode();
+            }
+        });
+
+        // Fungsi Download QR Code sebagai gambar PNG
+        downloadBtn.addEventListener('click', () => {
+            // Pustaka qrcode.js menghasilkan elemen <canvas> atau <img>
+            const canvas = qrcodeContainer.querySelector('canvas');
+            const img = qrcodeContainer.querySelector('img');
+            
+            let imageUrl = '';
+            if (canvas) {
+                imageUrl = canvas.toDataURL("image/png");
+            } else if (img) {
+                imageUrl = img.src;
+            }
+
+            if (imageUrl) {
+                const link = document.createElement('a');
+                link.href = imageUrl;
+                link.download = `qrcode-${Date.now()}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+</body>
+</html>
