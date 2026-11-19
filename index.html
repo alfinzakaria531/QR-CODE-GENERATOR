@@ -132,8 +132,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-800/60">
-        Dibuat dengan HTML, Tailwind CSS & QRCode.js • Siap untuk GitHub Pages
+    <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-800/60 tracking-wider">
+        QR CODE GENERATOR BY @alfinz531
     </footer>
 
     <!-- Logika JavaScript -->
@@ -198,7 +198,6 @@
 
         // Fungsi Download QR Code sebagai gambar PNG
         downloadBtn.addEventListener('click', () => {
-            // Pustaka qrcode.js menghasilkan elemen <canvas> atau <img>
             const canvas = qrcodeContainer.querySelector('canvas');
             const img = qrcodeContainer.querySelector('img');
             
