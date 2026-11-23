@@ -7,35 +7,6 @@ const downloadBtn = document.getElementById('download-btn');
 const qrcodeContainer = document.getElementById('qrcode');
 const qrWrapper = document.getElementById('qr-wrapper');
 const placeholder = document.getElementById('placeholder');
-const toastEl = document.getElementById('toast-notification');
-const toastMessage = document.getElementById('toast-message');
-
-let toastTimeout;
-
-// Fungsi untuk menampilkan pop-up notifikasi (toast)
-function showNotification(message, type = 'success') {
-    toastMessage.textContent = message;
-
-    // Reset warna border/ikon sesuai tipe notifikasi
-    toastEl.classList.remove('border-emerald-500/60', 'border-rose-500/60', 'text-emerald-300', 'text-rose-300');
-
-    if (type === 'error') {
-        toastEl.classList.add('border-rose-500/60', 'text-rose-300');
-    } else {
-        toastEl.classList.add('border-emerald-500/60', 'text-emerald-300');
-    }
-
-    // Tampilkan pop-up
-    toastEl.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-    toastEl.classList.add('opacity-100', 'translate-y-0');
-
-    // Sembunyikan otomatis setelah 3 detik
-    clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-        toastEl.classList.remove('opacity-100', 'translate-y-0');
-        toastEl.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-    }, 3000);
-}
 
 // Update teks kode warna Hex saat color picker berubah
 qrColor.addEventListener('input', (e) => {
@@ -50,7 +21,7 @@ function generateQRCode() {
         qrText.focus();
         qrText.classList.add('ring-2', 'ring-rose-500');
         setTimeout(() => qrText.classList.remove('ring-2', 'ring-rose-500'), 1500);
-        showNotification('Masukkan teks atau URL terlebih dahulu!', 'error');
+        alert('Masukkan teks atau URL terlebih dahulu!');
         return;
     }
 
@@ -75,8 +46,8 @@ function generateQRCode() {
     qrWrapper.classList.remove('hidden');
     qrWrapper.classList.add('flex');
 
-    // Munculkan pop-up notifikasi berhasil
-    showNotification('QR Code berhasil dibuat!', 'success');
+    // Pop-up alert bawaan browser saat QR Code berhasil dibuat
+    alert('QR Code berhasil dibuat!');
 }
 
 // Event klik tombol Generate
@@ -108,6 +79,5 @@ downloadBtn.addEventListener('click', () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        showNotification('QR Code PNG berhasil diunduh!', 'success');
     }
 });
