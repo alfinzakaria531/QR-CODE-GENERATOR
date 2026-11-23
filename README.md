@@ -2,7 +2,7 @@
 
 Aplikasi web ringan berbasis *client-side* untuk mengubah teks atau tautan (URL) menjadi QR Code secara instan. Dirancang agar dapat di-hosting gratis menggunakan **GitHub Pages** tanpa memerlukan server *backend* maupun database.
 
-**QR CODE GENERATOR BY @alfinz531**
+**QR CODE GENERATOR BY ALFIN & RIDHO SMKN 1 BLITAR**
 
 ## Fitur Utama
 - **Konversi Instan:** Mengubah teks bebas atau tautan URL menjadi QR Code secara langsung di browser.
