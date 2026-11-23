@@ -1,0 +1,67 @@
+/* Animasi muncul untuk hasil QR Code */
+@keyframes qrPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(6px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: qrPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Latar belakang grid halus agar tampilan tidak polos */
+body.bg-grid-pattern {
+    background-color: #0f172a;
+    background-image:
+        radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.14), transparent 55%),
+        linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 100% 100%, 28px 28px, 28px 28px;
+}
+
+/* Kartu utama dengan aksen cahaya halus */
+.qr-card {
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(148, 163, 184, 0.12),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Bingkai preview QR agar terlihat seperti kartu scan yang bersih */
+.qr-preview-frame {
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.qr-preview-frame:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -8px rgba(0, 0, 0, 0.45);
+}
+
+/* Memastikan canvas/img di dalam #qrcode presisi di tengah */
+#qrcode img,
+#qrcode canvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 0.375rem;
+}
+
+/* Merapikan input color bawaan browser */
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
